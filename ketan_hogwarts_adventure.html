@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ketan and the Dragon's Secret — A Hogwarts Tale</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #9a6c10;
+    --gold-light: #7a4e08;
+    --gold-dark: #b8860b;
+    --parchment: #3d2b10;
+    --parchment-dark: #5a3e1a;
+    --deep-red: #8b1a2a;
+    --burgundy: #6b0f1a;
+    --ink: #1a0f05;
+    --ink-mid: #3d2b1f;
+    --glow: rgba(154,108,16,0.25);
+    --shadow: rgba(100,60,0,0.15);
+    --bg: #fdf8f0;
+    --bg2: #f5ead8;
+    --bg3: #ede0c4;
+    --card-bg: #fff9f0;
+    --card-border: #d4a843;
+    --section-bg: rgba(180,130,60,0.07);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: 'IM Fell English', serif;
+    overflow-x: hidden;
+  }
+
+  /* ── PARTICLE DUST (light theme) ── */
+  #starfield {
+    position: fixed; inset: 0; z-index: 0;
+    background: 
+      radial-gradient(ellipse at 10% 0%, rgba(200,160,80,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 5%, rgba(180,100,50,0.08) 0%, transparent 40%),
+      var(--bg);
+    pointer-events: none;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: #c9a84c;
+    animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 0.08; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(1.4); }
+  }
+
+  /* ── HEADER / HERO ── */
+  .hero {
+    position: relative; z-index: 2;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem 2rem;
+    overflow: hidden;
+    background: linear-gradient(180deg, #fdf4e0 0%, #f5e8c8 60%, #ede0b8 100%);
+    border-bottom: 2px solid rgba(180,130,60,0.2);
+  }
+
+  .castle-wrap {
+    position: absolute; inset: 0;
+    display: flex; align-items: flex-end; justify-content: center;
+    pointer-events: none; z-index: 1;
+  }
+
+  /* SVG Castle */
+  .castle-svg { width: 100%; max-width: 900px; opacity: 0.10; filter: sepia(1) brightness(0.4); }
+
+  .hero-content { position: relative; z-index: 3; max-width: 820px; }
+
+  .badge {
+    display: inline-block;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 0.35rem 1.2rem;
+    margin-bottom: 1.8rem;
+    animation: fadeUp 1s ease both;
+    background: rgba(255,255,255,0.5);
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(2.2rem, 6vw, 4.8rem);
+    line-height: 1.1;
+    color: #5a2e06;
+    text-shadow: 0 2px 12px rgba(180,100,0,0.18), 0 1px 0 #fff;
+    animation: fadeUp 1s ease 0.2s both;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 span { color: #c05a10; }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    font-style: italic;
+    color: #7a5530;
+    animation: fadeUp 1s ease 0.4s both;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+  }
+
+  .scroll-hint {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    opacity: 0.7;
+    animation: bounce 2s ease infinite;
+    margin-top: 1rem;
+  }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── CHARACTERS BANNER ── */
+  .characters-section {
+    position: relative; z-index: 2;
+    padding: 4rem 2rem;
+    background: linear-gradient(180deg, var(--bg2) 0%, var(--bg3) 50%, var(--bg2) 100%);
+    border-top: 1px solid rgba(180,130,60,0.2);
+    border-bottom: 1px solid rgba(180,130,60,0.2);
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    color: #5a2e06;
+    margin-bottom: 0.5rem;
+  }
+  .section-divider {
+    text-align: center;
+    color: var(--gold-dark);
+    font-size: 1.5rem;
+    letter-spacing: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .characters-grid {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .char-card {
+    background: #fff9f0;
+    border: 1px solid #d4a843;
+    border-radius: 6px;
+    width: 210px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 12px rgba(180,120,30,0.1);
+  }
+  .char-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.06), transparent);
+    pointer-events: none;
+  }
+  .char-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(180,120,30,0.18);
+  }
+
+  .char-avatar {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    border: 3px solid #d4a843;
+    box-shadow: 0 0 12px rgba(180,130,30,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    background: radial-gradient(circle, #fef3dc, #f5e0b0);
+    overflow: hidden;
+  }
+
+  .char-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    color: #5a2e06;
+    margin-bottom: 0.3rem;
+  }
+  .char-house {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: #9a6c10;
+    margin-bottom: 0.6rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.05em;
+  }
+  .char-trait {
+    font-size: 0.82rem;
+    color: #5a3e1a;
+    line-height: 1.5;
+  }
+  .char-wand {
+    margin-top: 0.7rem;
+    font-size: 0.7rem;
+    color: #9a6c10;
+    font-family: 'Cinzel', serif;
+    opacity: 0.85;
+  }
+
+  /* ── STORY ── */
+  .story-wrap {
+    position: relative; z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 2rem 5rem;
+    background: var(--bg);
+  }
+
+  .chapter {
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(180,130,60,0.15);
+  }
+  .chapter:last-child { border-bottom: none; }
+  .chapter.visible { opacity: 1; transform: translateY(0); }
+
+  .chapter-number {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    color: #b8860b;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .chapter-title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(1.2rem, 3vw, 1.9rem);
+    color: #5a2e06;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(180,130,60,0.25);
+  }
+
+  /* Scene illustration */
+  .scene-art {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid rgba(180,130,60,0.25);
+    margin-bottom: 1.8rem;
+    box-shadow: 0 4px 20px rgba(180,100,0,0.1);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .scene-art svg { width: 100%; display: block; }
+
+  .drop-cap::first-letter {
+    float: left;
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 4.5rem;
+    line-height: 0.75;
+    color: #8b4513;
+    text-shadow: 0 2px 6px rgba(180,100,0,0.15);
+    margin-right: 0.12em;
+    margin-top: 0.08em;
+  }
+
+  p {
+    font-size: clamp(1rem, 2.2vw, 1.12rem);
+    line-height: 1.9;
+    color: #3d2010;
+    margin-bottom: 1.1rem;
+  }
+
+  .spell-text {
+    font-family: 'Cinzel', serif;
+    color: #1a5a9a;
+    font-style: italic;
+    text-shadow: 0 0 8px rgba(30,100,200,0.2);
+    font-size: 1.05em;
+  }
+
+  .dragon-text {
+    font-family: 'Cinzel', serif;
+    color: #b03000;
+    font-style: italic;
+    font-size: 1.02em;
+  }
+
+  .magic-quote {
+    border-left: 3px solid #b8860b;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    background: rgba(201,168,76,0.07);
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: #5a2e06;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 3rem 1rem;
+    border-top: 1px solid rgba(180,130,60,0.25);
+    background: var(--bg2);
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: #9a6c10;
+  }
+  footer strong { color: #5a2e06; }
+
+  /* ── FLOATING SPARKS ── */
+  .spark {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 50%;
+    animation: floatSpark var(--s-dur, 6s) ease-in-out infinite var(--s-delay, 0s);
+    background: #d4a843;
+    opacity: 0;
+  }
+  @keyframes floatSpark {
+    0% { opacity:0; transform: translateY(0) scale(1); }
+    20% { opacity:0.4; }
+    80% { opacity:0.15; }
+    100% { opacity:0; transform: translateY(-180px) scale(0.3); }
+  }
+
+  /* Responsive */
+  @media(max-width:600px) {
+    .characters-grid { gap: 1rem; }
+    .char-card { width: 160px; padding: 1rem 0.8rem; }
+    .char-avatar { width: 75px; height: 75px; font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Starfield -->
+<div id="starfield"></div>
+
+<!-- Floating sparks -->
+<div id="sparks"></div>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<header class="hero">
+  <div class="castle-wrap">
+    <!-- SVG Hogwarts Castle Silhouette -->
+    <svg class="castle-svg" viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="castleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#8b6010;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#5a3e1a;stop-opacity:0.3"/>
+        </linearGradient>
+      </defs>
+      <!-- Base / ground -->
+      <rect x="0" y="370" width="900" height="30" fill="url(#castleGrad)" opacity="0.6"/>
+      <!-- Left tower -->
+      <rect x="60" y="200" width="60" height="170" fill="url(#castleGrad)"/>
+      <polygon points="60,200 90,130 120,200" fill="url(#castleGrad)"/>
+      <rect x="68" y="240" width="12" height="20" fill="#f5ead0"/>
+      <rect x="90" y="250" width="12" height="20" fill="#f5ead0"/>
+      <!-- battlements left tower -->
+      <rect x="60" y="195" width="10" height="12" fill="url(#castleGrad)"/>
+      <rect x="75" y="195" width="10" height="12" fill="url(#castleGrad)"/>
+      <rect x="90" y="195" width="10" height="12" fill="url(#castleGrad)"/>
+      <rect x="105" y="195" width="10" height="12" fill="url(#castleGrad)"/>
+      <!-- Left wall -->
+      <rect x="120" y="260" width="120" height="110" fill="url(#castleGrad)"/>
+      <!-- Middle-left tower -->
+      <rect x="220" y="180" width="70" height="190" fill="url(#castleGrad)"/>
+      <polygon points="220,180 255,100 290,180" fill="url(#castleGrad)"/>
+      <rect x="230" y="220" width="14" height="24" fill="#f5ead0"/>
+      <rect x="254" y="240" width="14" height="24" fill="#f5ead0"/>
+      <!-- battlements mid-left -->
+      <rect x="220" y="175" width="12" height="14" fill="url(#castleGrad)"/>
+      <rect x="237" y="175" width="12" height="14" fill="url(#castleGrad)"/>
+      <rect x="254" y="175" width="12" height="14" fill="url(#castleGrad)"/>
+      <rect x="271" y="175" width="12" height="14" fill="url(#castleGrad)"/>
+      <!-- Centre keep (tallest) -->
+      <rect x="310" y="130" width="110" height="240" fill="url(#castleGrad)"/>
+      <polygon points="310,130 365,40 420,130" fill="url(#castleGrad)"/>
+      <!-- Great Hall window -->
+      <rect x="340" y="200" width="20" height="40" rx="10" fill="#f5ead0"/>
+      <rect x="370" y="200" width="20" height="40" rx="10" fill="#f5ead0"/>
+      <rect x="345" y="280" width="14" height="24" fill="#f5ead0"/>
+      <rect x="365" y="280" width="14" height="24" fill="#f5ead0"/>
+      <rect x="385" y="280" width="14" height="24" fill="#f5ead0"/>
+      <!-- battlements centre -->
+      <rect x="310" y="125" width="14" height="16" fill="url(#castleGrad)"/>
+      <rect x="330" y="125" width="14" height="16" fill="url(#castleGrad)"/>
+      <rect x="350" y="125" width="14" height="16" fill="url(#castleGrad)"/>
+      <rect x="370" y="125" width="14" height="16" fill="url(#castleGrad)"/>
+      <rect x="390" y="125" width="14" height="16" fill="url(#castleGrad)"/>
+      <rect x="410" y="125" width="14" height="16" fill="url(#castleGrad)"/>
+      <!-- Right wall -->
+      <rect x="420" y="250" width="130" height="120" fill="url(#castleGrad)"/>
+      <!-- Middle-right tower -->
+      <rect x="530" y="190" width="70" height="180" fill="url(#castleGrad)"/>
+      <polygon points="530,190 565,110 600,190" fill="url(#castleGrad)"/>
+      <rect x="542" y="230" width="14" height="24" fill="#f5ead0"/>
+      <rect x="566" y="250" width="14" height="24" fill="#f5ead0"/>
+      <!-- Right wall far -->
+      <rect x="600" y="270" width="110" height="100" fill="url(#castleGrad)"/>
+      <!-- Right tower -->
+      <rect x="710" y="210" width="60" height="160" fill="url(#castleGrad)"/>
+      <polygon points="710,210 740,140 770,210" fill="url(#castleGrad)"/>
+      <rect x="718" y="250" width="12" height="20" fill="#f5ead0"/>
+      <rect x="740" y="260" width="12" height="20" fill="#f5ead0"/>
+      <!-- Arched gate -->
+      <rect x="345" y="310" width="50" height="60" rx="25" fill="#f5ead0"/>
+      <!-- Lake reflection glow -->
+      <ellipse cx="450" cy="390" rx="300" ry="18" fill="url(#castleGrad)" opacity="0.15"/>
+      <!-- Stars / moon -->
+      <circle cx="820" cy="60" r="25" fill="#c9a84c" opacity="0.3"/>
+      <circle cx="820" cy="60" r="20" fill="#f5ead0" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="badge">✦ A Hogwarts Tale ✦</div>
+    <h1>Ketan and<br/>the <span>Dragon's</span> Secret</h1>
+    <p class="hero-sub">A magical adventure starring Ketan, Karthik, Kalai & Aadhini</p>
+    <div class="scroll-hint">▼ &nbsp; Scroll to Begin the Story &nbsp; ▼</div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════
+     CHARACTERS
+══════════════════════════════ -->
+<section class="characters-section">
+  <p class="section-title">The Young Wizards</p>
+  <p class="section-divider">✦ ✦ ✦</p>
+  <div class="characters-grid">
+
+    <div class="char-card">
+      <div class="char-avatar">🧙‍♂️</div>
+      <div class="char-name">Ketan</div>
+      <div class="char-house">🦁 Gryffindor</div>
+      <div class="char-trait">Brave, curious, and surprisingly good with dragon-calming spells. Has a lightning-bolt birthmark on his wrist.</div>
+      <div class="char-wand">⚡ Wand: Ashwood & Phoenix Feather</div>
+    </div>
+
+    <div class="char-card">
+      <div class="char-avatar">🧙</div>
+      <div class="char-name">Karthik</div>
+      <div class="char-house">🦅 Ravenclaw</div>
+      <div class="char-trait">The strategist of the group. Always has a plan — even when the plan involves running away from dragons.</div>
+      <div class="char-wand">📚 Wand: Rosewood & Unicorn Hair</div>
+    </div>
+
+    <div class="char-card">
+      <div class="char-avatar">🧝</div>
+      <div class="char-name">Kalai</div>
+      <div class="char-house">🦡 Hufflepuff</div>
+      <div class="char-trait">Fearlessly loyal and gifted with potions. Can brew a Calming Draught faster than Professor Snape could frown.</div>
+      <div class="char-wand">🌿 Wand: Willow & Dragon Heartstring</div>
+    </div>
+
+    <div class="char-card">
+      <div class="char-avatar">🧝‍♀️</div>
+      <div class="char-name">Aadhini</div>
+      <div class="char-house">🐍 Slytherin</div>
+      <div class="char-trait">Sharp-witted and fiercely protective of her friends. Can speak Parseltongue — which turns out to work on dragons too.</div>
+      <div class="char-wand">🌊 Wand: Ebony & Sea Serpent Scale</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     STORY
+══════════════════════════════ -->
+<main class="story-wrap">
+
+  <!-- CHAPTER 1 -->
+  <article class="chapter" id="ch1">
+    <div class="chapter-number">Chapter I</div>
+    <h2 class="chapter-title">The Letter Smelled of Dragon Smoke</h2>
+
+    <!-- Scene Art: Owl delivering letter -->
+    <div class="scene-art">
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="moonGlow" cx="50%" cy="30%" r="40%">
+            <stop offset="0%" style="stop-color:#f0e8d0;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#e8d5a8;stop-opacity:1"/>
+          </radialGradient>
+          <radialGradient id="moonLight" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#f0d080;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#f0d080;stop-opacity:0"/>
+          </radialGradient>
+        </defs>
+        <rect width="800" height="320" fill="url(#moonGlow)"/>
+        <!-- Moon -->
+        <circle cx="400" cy="80" r="55" fill="#d4a843" opacity="0.7"/>
+        <circle cx="420" cy="68" r="45" fill="#f0e8d0"/>
+        <!-- Moon glow -->
+        <ellipse cx="400" cy="80" rx="100" ry="70" fill="url(#moonLight)" opacity="0.2"/>
+        <!-- Stars -->
+        <circle cx="100" cy="40" r="2" fill="#9a6c10" opacity="0.4"/>
+        <circle cx="200" cy="20" r="1.5" fill="#9a6c10" opacity="0.35"/>
+        <circle cx="600" cy="30" r="2" fill="#9a6c10" opacity="0.45"/>
+        <circle cx="700" cy="50" r="1.5" fill="#9a6c10" opacity="0.3"/>
+        <circle cx="150" cy="80" r="1" fill="#9a6c10" opacity="0.4"/>
+        <circle cx="650" cy="70" r="1" fill="#9a6c10" opacity="0.35"/>
+        <circle cx="50" cy="120" r="1.5" fill="#9a6c10" opacity="0.25"/>
+        <circle cx="750" cy="100" r="1" fill="#9a6c10" opacity="0.3"/>
+        <!-- Tree silhouette left -->
+        <rect x="80" y="200" width="15" height="120" fill="#5a3e1a" opacity="0.4"/>
+        <ellipse cx="87" cy="190" rx="40" ry="55" fill="#5a3e1a" opacity="0.4"/>
+        <!-- Tree silhouette right -->
+        <rect x="700" y="210" width="15" height="110" fill="#5a3e1a" opacity="0.4"/>
+        <ellipse cx="707" cy="200" rx="35" ry="50" fill="#5a3e1a" opacity="0.4"/>
+        <!-- Owl body -->
+        <ellipse cx="400" cy="200" rx="28" ry="35" fill="#8b6040"/>
+        <ellipse cx="400" cy="185" rx="22" ry="20" fill="#c9a070"/>
+        <!-- Owl eyes -->
+        <circle cx="392" cy="182" r="7" fill="#f0d080"/>
+        <circle cx="408" cy="182" r="7" fill="#f0d080"/>
+        <circle cx="392" cy="182" r="4" fill="#3d2010"/>
+        <circle cx="408" cy="182" r="4" fill="#3d2010"/>
+        <!-- Owl beak -->
+        <polygon points="400,188 396,195 404,195" fill="#d4a040"/>
+        <!-- Wings spread -->
+        <ellipse cx="348" cy="205" rx="55" ry="18" fill="#7a5030" transform="rotate(-15 348 205)"/>
+        <ellipse cx="452" cy="205" rx="55" ry="18" fill="#7a5030" transform="rotate(15 452 205)"/>
+        <!-- Letter in talons -->
+        <rect x="385" y="228" width="30" height="22" rx="2" fill="#fffdf5"/>
+        <rect x="385" y="228" width="30" height="22" rx="2" fill="none" stroke="#b8860b" stroke-width="1.5"/>
+        <!-- Wax seal -->
+        <circle cx="400" cy="239" r="5" fill="#8b1a2a"/>
+        <!-- Letter glow -->
+        <ellipse cx="400" cy="240" rx="25" ry="10" fill="#d4a843" opacity="0.15"/>
+        <!-- Hogwarts banner at bottom -->
+        <rect x="0" y="290" width="800" height="30" fill="rgba(180,130,60,0.15)"/>
+        <text x="400" y="311" text-anchor="middle" font-family="serif" font-size="13" fill="#9a6c10" letter-spacing="4">✦ HOGWARTS SCHOOL OF WITCHCRAFT AND WIZARDRY ✦</text>
+      </svg>
+    </div>
+
+    <p class="drop-cap">On the morning of Ketan's eleventh birthday, three things happened: he woke up, he spilled his mango juice, and an enormous tawny owl crashed through his bedroom window with a letter clenched in its talons. The envelope was sealed in dark red wax stamped with a crest of four animals — a lion, an eagle, a badger, and a serpent — and it smelled, very distinctly, of dragon smoke.</p>
+
+    <p>His mother read it first, then his father, then both of them together, in silence. Then they handed it to Ketan.</p>
+
+    <div class="magic-quote">"Dear Mr. Ketan,<br/>We are pleased to inform you that you have been accepted to <em>Hogwarts School of Witchcraft and Wizardry.</em><br/>The term begins on 1st September. We await your owl by no later than 31st July.<br/><br/>Yours sincerely,<br/>Professor M. McGonagall, Deputy Headmistress"</div>
+
+    <p>At the bottom, scrawled in a different ink — slightly orange and faintly smoking — was a handwritten note: <em>"P.S. — You will need extra dragonhide gloves. Just trust us."</em></p>
+
+    <p>Ketan blinked. Then he grinned the widest grin of his life.</p>
+  </article>
+
+  <!-- CHAPTER 2 -->
+  <article class="chapter" id="ch2">
+    <div class="chapter-number">Chapter II</div>
+    <h2 class="chapter-title">The Sorting Hat Sings of Fire</h2>
+
+    <!-- Scene Art: Great Hall -->
+    <div class="scene-art">
+      <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#f5e8d0;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#f0d8b0;stop-opacity:1"/>
+          </linearGradient>
+          <radialGradient id="candleLight" cx="50%" cy="0%" r="80%">
+            <stop offset="0%" style="stop-color:#f0a830;stop-opacity:0.3"/>
+            <stop offset="100%" style="stop-color:#0d0502;stop-opacity:0"/>
+          </radialGradient>
+        </defs>
+        <rect width="800" height="300" fill="#f5ead8"/>
+        <!-- Ceiling candle glow -->
+        <rect width="800" height="300" fill="url(#candleLight)"/>
+        <!-- Floating candles -->
+        <g opacity="0.9">
+          <!-- candle 1 -->
+          <rect x="120" y="30" width="6" height="30" fill="#f5ead0"/>
+          <ellipse cx="123" cy="30" rx="4" ry="6" fill="#ffa500" opacity="0.8"/>
+          <rect x="121" y="25" width="2" height="8" fill="#ff6b00" opacity="0.6"/>
+          <!-- candle 2 -->
+          <rect x="200" y="50" width="6" height="25" fill="#f5ead0"/>
+          <ellipse cx="203" cy="50" rx="4" ry="6" fill="#ffa500" opacity="0.8"/>
+          <!-- candle 3 -->
+          <rect x="300" y="20" width="6" height="35" fill="#f5ead0"/>
+          <ellipse cx="303" cy="20" rx="4" ry="6" fill="#ffa500" opacity="0.8"/>
+          <!-- candle 4 -->
+          <rect x="400" y="40" width="6" height="28" fill="#f5ead0"/>
+          <ellipse cx="403" cy="40" rx="4" ry="6" fill="#ffa500" opacity="0.8"/>
+          <!-- candle 5 -->
+          <rect x="500" y="25" width="6" height="32" fill="#f5ead0"/>
+          <ellipse cx="503" cy="25" rx="4" ry="6" fill="#ffa500" opacity="0.8"/>
+          <!-- candle 6 -->
+          <rect x="600" y="45" width="6" height="26" fill="#f5ead0"/>
+          <ellipse cx="603" cy="45" rx="4" ry="6" fill="#ffa500" opacity="0.8"/>
+          <!-- candle 7 -->
+          <rect x="680" y="35" width="6" height="30" fill="#f5ead0"/>
+          <ellipse cx="683" cy="35" rx="4" ry="6" fill="#ffa500" opacity="0.8"/>
+        </g>
+        <!-- Long tables -->
+        <rect x="50" y="160" width="300" height="12" rx="3" fill="#8b6040"/>
+        <rect x="450" y="160" width="300" height="12" rx="3" fill="#8b6040"/>
+        <!-- Students silhouettes -->
+        <g fill="#5a3010" opacity="0.7">
+          <ellipse cx="100" cy="152" rx="12" ry="14"/>
+          <rect x="94" y="160" width="12" height="20"/>
+          <ellipse cx="150" cy="150" rx="11" ry="13"/>
+          <rect x="144" y="158" width="11" height="20"/>
+          <ellipse cx="200" cy="153" rx="12" ry="14"/>
+          <rect x="194" y="161" width="12" height="20"/>
+          <ellipse cx="250" cy="151" rx="11" ry="13"/>
+          <rect x="244" y="159" width="11" height="20"/>
+          <ellipse cx="300" cy="154" rx="12" ry="14"/>
+          <rect x="294" y="162" width="12" height="20"/>
+          <!-- right table -->
+          <ellipse cx="500" cy="152" rx="12" ry="14"/>
+          <rect x="494" y="160" width="12" height="20"/>
+          <ellipse cx="550" cy="150" rx="11" ry="13"/>
+          <rect x="544" y="158" width="11" height="20"/>
+          <ellipse cx="600" cy="153" rx="12" ry="14"/>
+          <rect x="594" y="161" width="12" height="20"/>
+          <ellipse cx="650" cy="151" rx="11" ry="13"/>
+          <rect x="644" y="159" width="11" height="20"/>
+          <ellipse cx="700" cy="154" rx="12" ry="14"/>
+          <rect x="694" y="162" width="12" height="20"/>
+        </g>
+        <!-- Sorting stool + hat centre -->
+        <rect x="383" y="200" width="34" height="40" rx="3" fill="#a07040"/>
+        <!-- Hat -->
+        <ellipse cx="400" cy="200" rx="28" ry="8" fill="#5a3e1a"/>
+        <polygon points="400,120 375,200 425,200" fill="#4a2e10"/>
+        <ellipse cx="400" cy="120" rx="12" ry="10" fill="#5a3e1a"/>
+        <!-- Hat brim wrinkle -->
+        <path d="M372,200 Q400,192 428,200" stroke="#8b6040" stroke-width="2" fill="none"/>
+        <!-- Teachers table at back -->
+        <rect x="100" y="250" width="600" height="15" rx="3" fill="#8b6040"/>
+        <!-- Torches on wall -->
+        <rect x="30" y="220" width="8" height="20" fill="#a07040"/>
+        <ellipse cx="34" cy="218" rx="7" ry="10" fill="#ffa500" opacity="0.6"/>
+        <rect x="762" y="220" width="8" height="20" fill="#a07040"/>
+        <ellipse cx="766" cy="218" rx="7" ry="10" fill="#ffa500" opacity="0.6"/>
+        <!-- Gold label -->
+        <text x="400" y="290" text-anchor="middle" font-family="serif" font-size="12" fill="#9a6c10" opacity="0.8" letter-spacing="3">THE GREAT HALL — SORTING NIGHT</text>
+      </svg>
+    </div>
+
+    <p class="drop-cap">The Great Hall of Hogwarts was more magnificent than any palace Ketan had ever imagined. Thousands of candles floated above four long tables where hundreds of students in black robes chattered and laughed. The ceiling was bewitched to look like the night sky — deep indigo, scattered with real-looking stars.</p>
+
+    <p>Ketan stood in a nervous line of first-years, craning his neck. Beside him, a boy with spectacles and a thick spellbook tucked under one arm introduced himself quietly: <strong>"Karthik. Ravenclaw, probably."</strong></p>
+
+    <p>A round-faced boy behind them smiled broadly. <strong>"Kalai,"</strong> he whispered. <strong>"I've memorised forty-seven potion recipes already. Just in case."</strong></p>
+
+    <p>Then from the other side of the line came a cool, confident voice: <strong>"Aadhini. Don't be nervous — the hat doesn't bite. I asked it."</strong> She paused. <strong>"It was a very short conversation."</strong></p>
+
+    <p>One by one, the hat sang their futures. Karthik to <span style="color:#7ec8e3">Ravenclaw</span>. Kalai to <span style="color:#f4d03f">Hufflepuff</span>. Aadhini, after a long dramatic pause, to <span style="color:#5dbb63">Slytherin</span>. And Ketan — the hat barely touched his head before shouting:</p>
+
+    <div class="magic-quote" style="font-size:1.3rem; color:#c05a10;">"GRYFFINDOR!"</div>
+
+    <p>The four friends — sorted into four different houses — locked eyes across the Great Hall and, without saying a word, all understood something: they were going to cause a great deal of trouble together.</p>
+  </article>
+
+  <!-- CHAPTER 3 -->
+  <article class="chapter" id="ch3">
+    <div class="chapter-number">Chapter III</div>
+    <h2 class="chapter-title">The Dragon Beneath the Lake</h2>
+
+    <!-- Scene Art: Dragon -->
+    <div class="scene-art">
+      <svg viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="lakeGrad" cx="50%" cy="70%" r="60%">
+            <stop offset="0%" style="stop-color:#0a1a30;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#050d18;stop-opacity:1"/>
+          </radialGradient>
+          <radialGradient id="fireGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#ff4500;stop-opacity:0.9"/>
+            <stop offset="50%" style="stop-color:#ff8c00;stop-opacity:0.6"/>
+            <stop offset="100%" style="stop-color:#ff4500;stop-opacity:0"/>
+          </radialGradient>
+        </defs>
+        <rect width="800" height="340" fill="#dde8f0"/>
+        <!-- Lake ripples -->
+        <ellipse cx="400" cy="300" rx="380" ry="30" fill="#b8d0e8" opacity="0.8"/>
+        <ellipse cx="400" cy="310" rx="300" ry="15" fill="#a0c0dc" opacity="0.6"/>
+        <ellipse cx="400" cy="320" rx="200" ry="10" fill="#90b0d0" opacity="0.5"/>
+        <!-- Stars (dim - dusk) -->
+        <circle cx="50" cy="30" r="1.5" fill="#9a6c10" opacity="0.3"/>
+        <circle cx="120" cy="15" r="1" fill="#9a6c10" opacity="0.25"/>
+        <circle cx="700" cy="20" r="1.5" fill="#9a6c10" opacity="0.2"/>
+        <circle cx="750" cy="50" r="1" fill="#9a6c10" opacity="0.3"/>
+        <circle cx="680" cy="80" r="1" fill="#9a6c10" opacity="0.2"/>
+        <!-- DRAGON emerging from water -->
+        <!-- Dragon neck + body -->
+        <ellipse cx="400" cy="220" rx="55" ry="100" fill="#1a4020" transform="rotate(-15 400 220)"/>
+        <!-- Dragon head -->
+        <ellipse cx="450" cy="130" rx="50" ry="35" fill="#1a5025" transform="rotate(25 450 130)"/>
+        <!-- Dragon snout -->
+        <ellipse cx="490" cy="115" rx="30" ry="18" fill="#1a4020" transform="rotate(20 490 115)"/>
+        <!-- Dragon eye -->
+        <circle cx="460" cy="122" r="10" fill="#ff4500"/>
+        <circle cx="460" cy="122" r="6" fill="#1a0000"/>
+        <circle cx="457" cy="119" r="2" fill="white" opacity="0.8"/>
+        <!-- Nostrils -->
+        <ellipse cx="492" cy="108" rx="4" ry="2" fill="#0d2010" transform="rotate(20 492 108)"/>
+        <ellipse cx="498" cy="112" rx="4" ry="2" fill="#0d2010" transform="rotate(20 498 112)"/>
+        <!-- Dragon fire breath -->
+        <ellipse cx="560" cy="95" rx="70" ry="25" fill="url(#fireGlow)" transform="rotate(-10 560 95)"/>
+        <ellipse cx="580" cy="90" rx="50" ry="18" fill="#ff6b00" opacity="0.7" transform="rotate(-10 580 90)"/>
+        <ellipse cx="600" cy="86" rx="30" ry="10" fill="#ffaa00" opacity="0.8" transform="rotate(-10 600 86)"/>
+        <!-- Fire sparks -->
+        <circle cx="630" cy="80" r="4" fill="#ff4500" opacity="0.8"/>
+        <circle cx="645" cy="72" r="3" fill="#ffaa00" opacity="0.7"/>
+        <circle cx="655" cy="85" r="2" fill="#ff6b00" opacity="0.9"/>
+        <circle cx="625" cy="65" r="2" fill="#ffaa00" opacity="0.6"/>
+        <!-- Wings partially visible -->
+        <path d="M360,200 Q280,130 220,160 Q280,220 360,240" fill="#1a3018" opacity="0.85"/>
+        <path d="M380,180 Q320,100 260,100 Q310,180 375,210" fill="#0f2010" opacity="0.7"/>
+        <!-- Dragon scales pattern -->
+        <path d="M390,160 Q405,155 420,165" stroke="#2a6030" stroke-width="2" fill="none"/>
+        <path d="M385,180 Q402,173 418,182" stroke="#2a6030" stroke-width="2" fill="none"/>
+        <path d="M383,200 Q400,192 416,200" stroke="#2a6030" stroke-width="2" fill="none"/>
+        <!-- Horns -->
+        <polygon points="445,98 440,70 453,95" fill="#0d2010"/>
+        <polygon points="462,92 460,63 470,90" fill="#0d2010"/>
+        <!-- Water splash around body -->
+        <path d="M320,280 Q340,260 360,280 Q380,300 400,280 Q420,260 440,280 Q460,300 480,280" stroke="#1a5080" stroke-width="3" fill="none" opacity="0.6"/>
+        <path d="M330,295 Q360,275 390,295 Q420,315 450,295 Q470,278 490,295" stroke="#0d3060" stroke-width="2" fill="none" opacity="0.4"/>
+        <!-- Fire glow reflection on water -->
+        <ellipse cx="530" cy="308" rx="80" ry="10" fill="#ff4500" opacity="0.15"/>
+        <!-- Label -->
+        <text x="400" y="336" text-anchor="middle" font-family="serif" font-size="12" fill="#9a6c10" opacity="0.8" letter-spacing="3">THE BLACK LAKE — MIDNIGHT</text>
+      </svg>
+    </div>
+
+    <p class="drop-cap">Nobody expected the first Hogwarts emergency to arrive on a Tuesday. Ketan was returning from Astronomy class when he heard it — a thunderous splash from the direction of the Black Lake, followed by a column of orange fire shooting fifty feet into the night sky.</p>
+
+    <p>He ran. So did Karthik, who happened to be studying on the lakeside bench, and Kalai, who was collecting rare water-weeds for a potion. Aadhini arrived last, already pulling on her dragonhide gloves — the extra pair Professor McGonagall had quietly handed her on day one.</p>
+
+    <p><strong>"That,"</strong> said Karthik, adjusting his spectacles and staring at the enormous reptilian creature thrashing in the shallows, <strong>"is a Hebridean Black. Welsh dragons are green. Norwegian Ridgebacks have spines. But the Hebridean is—"</strong></p>
+
+    <p><strong>"On fire and very upset,"</strong> Kalai finished. <strong>"Yes, I can see that."</strong></p>
+
+    <p>The dragon roared again. Students screamed from the castle windows above. Professor Hagrid's giant silhouette came crashing through the trees, but he was still half a forest away. And the dragon — Ketan could now see — had one enormous claw tangled in what appeared to be a net of enchanted steel cables.</p>
+
+    <p><strong>"It's caught,"</strong> said Ketan quietly. <strong>"It's not attacking. It's scared."</strong></p>
+
+    <p>He took a step forward. His three friends grabbed his arm.</p>
+
+    <p><strong>"Ketan,"</strong> Aadhini said carefully, <strong>"that animal breathes fire."</strong></p>
+
+    <p><strong>"I know,"</strong> said Ketan. <strong>"But so would you, if you were terrified and trapped."</strong></p>
+
+    <p>He kept walking.</p>
+  </article>
+
+  <!-- CHAPTER 4 -->
+  <article class="chapter" id="ch4">
+    <div class="chapter-number">Chapter IV</div>
+    <h2 class="chapter-title">Four Wands, One Dragon</h2>
+
+    <!-- Scene Art: Four friends using magic -->
+    <div class="scene-art">
+      <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="magicBurst" cx="50%" cy="60%" r="55%">
+            <stop offset="0%" style="stop-color:#4a90d9;stop-opacity:0.6"/>
+            <stop offset="40%" style="stop-color:#7b2fff;stop-opacity:0.3"/>
+            <stop offset="100%" style="stop-color:#0d0502;stop-opacity:0"/>
+          </radialGradient>
+        </defs>
+        <rect width="800" height="300" fill="#f0ece0"/>
+        <rect width="800" height="300" fill="url(#magicBurst)" opacity="0.5"/>
+        <!-- Ground / grass -->
+        <ellipse cx="400" cy="300" rx="400" ry="20" fill="#c8d8a0"/>
+        <!-- Ketan (left) -->
+        <!-- Body -->
+        <rect x="95" y="160" width="22" height="55" rx="5" fill="#8b1a2a"/>
+        <ellipse cx="106" cy="155" rx="14" ry="16" fill="#c49a7a"/>
+        <!-- Wand + spell beam -->
+        <line x1="126" y1="170" x2="400" y2="200" stroke="#7fd8ff" stroke-width="2" opacity="0.9"/>
+        <ellipse cx="130" cy="170" rx="6" ry="3" fill="#7fd8ff" opacity="0.8" transform="rotate(-20 130 170)"/>
+        <!-- Karthik (left-center) -->
+        <rect x="235" y="165" width="22" height="55" rx="5" fill="#1a3a8b"/>
+        <ellipse cx="246" cy="160" rx="14" ry="16" fill="#b09080"/>
+        <line x1="256" y1="175" x2="400" y2="200" stroke="#a0f0a0" stroke-width="2" opacity="0.9"/>
+        <ellipse cx="260" cy="175" rx="6" ry="3" fill="#a0f0a0" opacity="0.8" transform="rotate(-10 260 175)"/>
+        <!-- Kalai (right-center) -->
+        <rect x="530" y="165" width="22" height="55" rx="5" fill="#7a5500"/>
+        <ellipse cx="541" cy="160" rx="14" ry="16" fill="#c0a880"/>
+        <line x1="531" y1="175" x2="400" y2="200" stroke="#ffd700" stroke-width="2" opacity="0.9"/>
+        <ellipse cx="527" cy="175" rx="6" ry="3" fill="#ffd700" opacity="0.8" transform="rotate(10 527 175)"/>
+        <!-- Aadhini (right) -->
+        <rect x="670" y="160" width="22" height="55" rx="5" fill="#0a5a0a"/>
+        <ellipse cx="681" cy="155" rx="14" ry="16" fill="#b09878"/>
+        <!-- Hair -->
+        <ellipse cx="681" cy="148" rx="14" ry="10" fill="#3d2010"/>
+        <line x1="671" y1="170" x2="400" y2="200" stroke="#ff88ff" stroke-width="2" opacity="0.9"/>
+        <ellipse cx="667" cy="170" rx="6" ry="3" fill="#ff88ff" opacity="0.8" transform="rotate(20 667 170)"/>
+        <!-- Magic convergence point / dragon silhouette -->
+        <ellipse cx="400" cy="205" rx="60" ry="25" fill="#ff4500" opacity="0.2"/>
+        <ellipse cx="400" cy="200" rx="40" ry="18" fill="#ff6b00" opacity="0.35"/>
+        <!-- Dragon silhouette (calming) - curled, smaller -->
+        <ellipse cx="400" cy="210" rx="45" ry="30" fill="#2a6030" opacity="0.7"/>
+        <ellipse cx="430" cy="195" rx="25" ry="18" fill="#3a7040"/>
+        <circle cx="440" cy="192" r="5" fill="#ffaa00" opacity="0.8"/>
+        <!-- Spell name labels -->
+        <text x="106" y="250" text-anchor="middle" font-family="serif" font-style="italic" font-size="10" fill="#1a5a9a" opacity="0.9">Tranquillus!</text>
+        <text x="246" y="250" text-anchor="middle" font-family="serif" font-style="italic" font-size="10" fill="#1a7a1a" opacity="0.9">Liberare!</text>
+        <text x="541" y="250" text-anchor="middle" font-family="serif" font-style="italic" font-size="10" fill="#9a6c10" opacity="0.9">Solvaro!</text>
+        <text x="681" y="250" text-anchor="middle" font-family="serif" font-style="italic" font-size="10" fill="#7a1a7a" opacity="0.9">Sssethara!</text>
+        <!-- Name labels -->
+        <text x="106" y="268" text-anchor="middle" font-family="serif" font-size="11" fill="#5a2e06">Ketan</text>
+        <text x="246" y="268" text-anchor="middle" font-family="serif" font-size="11" fill="#5a2e06">Karthik</text>
+        <text x="541" y="268" text-anchor="middle" font-family="serif" font-size="11" fill="#5a2e06">Kalai</text>
+        <text x="681" y="268" text-anchor="middle" font-family="serif" font-size="11" fill="#5a2e06">Aadhini</text>
+        <!-- Title label -->
+        <text x="400" y="290" text-anchor="middle" font-family="serif" font-size="12" fill="#9a6c10" opacity="0.8" letter-spacing="3">THE FOUR SPELLS UNITE</text>
+      </svg>
+    </div>
+
+    <p class="drop-cap">Ketan stood ten feet from the dragon. It was the size of a city bus and twice as loud, thrashing its enormous tail and sending jets of flame skyward. The steel cables — some kind of poacher's trap — were cutting into its left hind leg. Every movement made it worse.</p>
+
+    <p>Behind him, he heard three sets of footsteps on the gravel. His friends had followed.</p>
+
+    <p><strong>"Right,"</strong> said Karthik, opening his spellbook mid-stride. <strong>"According to Fantastical Beasts — Volume Three — the calming signal for a Hebridean Black is a low humming vibration at exactly the pitch of a—"</strong></p>
+
+    <p><strong>"Karthik,"</strong> said Kalai, uncorking a small bottle, <strong>"I have a Calming Draught. I made it yesterday. Can I throw it?"</strong></p>
+
+    <p><strong>"Aim for the nose,"</strong> said Aadhini. She stepped past all of them, looked at the dragon, and did something extraordinary. She began to speak — not in English, not in any language Ketan recognised — a soft, sibilant hissing that rose and fell like wind through reeds. Parseltongue. The dragon went still.</p>
+
+    <p>It turned one enormous eye toward Aadhini. The fire in its nostrils dimmed to a glow.</p>
+
+    <p><strong>"Now,"</strong> she said quietly. <strong>"Cut the cables. All three of you — now."</strong></p>
+
+    <p>Ketan raised his wand: <span class="spell-text">"Liberare!"</span><br/>
+    Karthik cast: <span class="spell-text">"Solvaro!"</span><br/>
+    Kalai flung his draught — it shattered perfectly against the dragon's snout — and added: <span class="spell-text">"Tranquillus!"</span></p>
+
+    <p>The cables snapped. The dragon let out a low, thunderous sound — not a roar. Something softer. Something that, if Ketan had to name it, sounded rather like a very large cat purring.</p>
+
+    <p>It lowered its enormous head to the ground and looked at them — all four of them — with those burning amber eyes. Then, slowly, it spread its wings, pushed off the surface of the lake, and rose into the Scottish sky.</p>
+
+    <p>They watched it until it was a speck among the stars.</p>
+
+    <p><strong>"Right,"</strong> said Karthik eventually. <strong>"Fifty points to every house, I'd imagine."</strong></p>
+
+    <p><strong>"A hundred,"</strong> said Aadhini, examining her gloves. <strong>"At least."</strong></p>
+
+    <p>Kalai sat down on a rock. <strong>"I need to make more Calming Draught."</strong></p>
+
+    <p>Ketan said nothing. He was still watching the sky.</p>
+  </article>
+
+  <!-- CHAPTER 5 — EPILOGUE -->
+  <article class="chapter" id="ch5">
+    <div class="chapter-number">Chapter V — Epilogue</div>
+    <h2 class="chapter-title">The Dragon Comes Back</h2>
+
+    <!-- Scene Art: Morning Hogwarts -->
+    <div class="scene-art">
+      <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="dawnGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#c8dff8;stop-opacity:1"/>
+            <stop offset="45%" style="stop-color:#f5c880;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#f5d8a0;stop-opacity:1"/>
+          </linearGradient>
+        </defs>
+        <rect width="800" height="280" fill="url(#dawnGrad)"/>
+        <!-- Sunrise glow on horizon -->
+        <ellipse cx="400" cy="280" rx="500" ry="60" fill="#ffaa30" opacity="0.35"/>
+        <ellipse cx="400" cy="280" rx="300" ry="35" fill="#ffe080" opacity="0.3"/>
+        <!-- Castle silhouette at dawn -->
+        <rect x="0" y="200" width="800" height="80" fill="#5a3a18"/>
+        <rect x="80" y="160" width="50" height="40" fill="#5a3a18"/>
+        <polygon points="80,160 105,120 130,160" fill="#5a3a18"/>
+        <rect x="220" y="140" width="60" height="60" fill="#5a3a18"/>
+        <polygon points="220,140 250,95 280,140" fill="#5a3a18"/>
+        <rect x="350" y="120" width="100" height="80" fill="#5a3a18"/>
+        <polygon points="350,120 400,70 450,120" fill="#5a3a18"/>
+        <rect x="530" y="145" width="60" height="55" fill="#5a3a18"/>
+        <polygon points="530,145 560,100 590,145" fill="#5a3a18"/>
+        <rect x="680" y="165" width="50" height="35" fill="#5a3a18"/>
+        <polygon points="680,165 705,125 730,165" fill="#5a3a18"/>
+        <!-- Dragon silhouette in sky -->
+        <ellipse cx="400" cy="80" rx="50" ry="22" fill="#4a2a08" opacity="0.7"/>
+        <ellipse cx="430" cy="68" rx="28" ry="18" fill="#4a2a08" opacity="0.7"/>
+        <path d="M360,75 Q310,45 270,60 Q310,90 360,95" fill="#4a2a08" opacity="0.6"/>
+        <path d="M375,65 Q335,30 300,35 Q340,72 378,82" fill="#4a2a08" opacity="0.45"/>
+        <!-- Fading stars (soft gold) -->
+        <circle cx="100" cy="40" r="1.5" fill="#c9a84c" opacity="0.35"/>
+        <circle cx="650" cy="30" r="1.5" fill="#c9a84c" opacity="0.3"/>
+        <circle cx="700" cy="60" r="1" fill="#c9a84c" opacity="0.25"/>
+        <!-- Lake at dawn -->
+        <ellipse cx="400" cy="270" rx="400" ry="20" fill="#b8cce0" opacity="0.7"/>
+        <!-- Dawn reflection of dragon -->
+        <ellipse cx="400" cy="275" rx="45" ry="6" fill="#a0b8d0" opacity="0.4"/>
+        <!-- Label -->
+        <text x="400" y="258" text-anchor="middle" font-family="serif" font-size="12" fill="#9a6c10" opacity="0.85" letter-spacing="3">DAWN OVER HOGWARTS</text>
+      </svg>
+    </div>
+
+    <p class="drop-cap">The next morning brought two things: a detention note from Professor McGonagall for being out after hours — and a unanimous award of one hundred and twenty points to each of the four houses, the highest ever given on a single night in Hogwarts history. Professor Dumbledore read the announcement at breakfast with a twinkle in his eye that suggested he was not entirely surprised.</p>
+
+    <p>But the real surprise came at noon.</p>
+
+    <p>They were at lunch when every window in the Great Hall suddenly filled with shadow. Students screamed, then gasped, then fell completely silent — because there, hovering outside the enchanted ceiling, was a <span class="dragon-text">Hebridean Black dragon</span>, its amber eyes scanning the hall below. In one claw it carried something: a single scale, dark green and edged with copper, the size of a dinner plate.</p>
+
+    <p>It found Ketan. Across hundreds of upturned faces, across house tables and floating candles and enchanted ceiling, the dragon held his gaze. Then it opened its enormous jaws — and instead of fire, it breathed out a warm cloud of golden mist that drifted through the windows and smelled of woodsmoke and mountain wind.</p>
+
+    <p>The scale fell through an open window and landed, with a gentle <em>thunk</em>, precisely in front of Ketan.</p>
+
+    <p>Then the dragon was gone.</p>
+
+    <p>The hall erupted. Students climbed on chairs. Teachers stood from their seats. Professor Hagrid was openly weeping into his enormous handkerchief.</p>
+
+    <p>Karthik pushed his glasses up and said very calmly: <strong>"Dragon scales are extremely rare. According to Appendix D of Ollivander's Wand Components—"</strong></p>
+
+    <p><strong>"He said thank you,"</strong> Aadhini interrupted softly, still looking at the empty window. <strong>"That's what the mist means. In Draconic. He said thank you."</strong></p>
+
+    <p>Kalai was already writing a letter to his parents. <strong>"They're never going to believe this."</strong></p>
+
+    <p>Ketan held the scale. It was warm in his hands, warm as sunlight, warm as the first morning of the best summer of your life. He thought of the dragon rising into the dark sky. He thought of four different house robes, four different wands, one terrified animal, and one shared decision.</p>
+
+    <p>He set the scale on the table and smiled.</p>
+
+    <div class="magic-quote" style="font-size:1.1rem; text-align:center;">
+      This was only the first year.<br/>
+      <em>There were six more to go.</em>
+    </div>
+
+    <p style="text-align:center; margin-top:2rem; font-family:'Cinzel',serif; color:#9a6c10; font-size:0.9rem; letter-spacing:0.15em;">
+      ✦ &nbsp; THE END — FOR NOW &nbsp; ✦
+    </p>
+  </article>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p style="font-size:1rem; margin-bottom:0.5rem; color:#5a2e06; font-family:'Cinzel Decorative',cursive;">
+    Ketan and the Dragon's Secret
+  </p>
+  <p>A Hogwarts story written especially for <strong>Ketan</strong></p>
+  <p style="margin-top:0.5rem; opacity:0.5;">Featuring &nbsp;✦&nbsp; Ketan &nbsp;✦&nbsp; Karthik &nbsp;✦&nbsp; Kalai &nbsp;✦&nbsp; Aadhini &nbsp;✦</p>
+  <p style="margin-top:0.5rem; opacity:0.4; font-size:0.65rem; letter-spacing:0.2em;">HOGWARTS · EST. 990 A.D. · WHERE MAGIC HAPPENS</p>
+</footer>
+
+<!-- ══════════════════════════════
+     SCRIPTS
+══════════════════════════════ -->
+<script>
+  // Starfield
+  const starfield = document.getElementById('starfield');
+  for (let i = 0; i < 130; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    star.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      --dur:${(Math.random()*4+2).toFixed(1)}s;
+      --delay:-${(Math.random()*5).toFixed(1)}s;
+    `;
+    starfield.appendChild(star);
+  }
+
+  // Floating sparks
+  const sparksEl = document.getElementById('sparks');
+  for (let i = 0; i < 18; i++) {
+    const spark = document.createElement('div');
+    spark.className = 'spark';
+    const size = Math.random() * 4 + 2;
+    spark.style.cssText = `
+      width:${size}px; height:${size}px;
+      bottom:${Math.random()*30}%;
+      left:${Math.random()*100}%;
+      --s-dur:${(Math.random()*6+5).toFixed(1)}s;
+      --s-delay:-${(Math.random()*8).toFixed(1)}s;
+    `;
+    sparksEl.appendChild(spark);
+  }
+
+  // Scroll reveal
+  const chapters = document.querySelectorAll('.chapter');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  chapters.forEach(ch => observer.observe(ch));
+</script>
+</body>
+</html>
